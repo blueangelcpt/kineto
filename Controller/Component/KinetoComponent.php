@@ -5,7 +5,7 @@ class KinetoComponent extends Component {
 		'authToken' => '',
 		'clientName' => ''
 	);
-	private $url = 'https://vndairtimecity.kineto.co/VendingRestfulAPI/api';
+	private $url = 'https://vend.airtimecity.com/VendingRestfulAPI/api';
 	private $socket = '';
 	private $tag = 'kineto';
 
