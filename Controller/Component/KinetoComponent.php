@@ -61,7 +61,7 @@ class KinetoComponent extends Component {
 		$payload = json_encode(array(
 			'transactionId' => $transactionId,
 			'mobileNumber' => $mobileNumber,
-			'amount' => $amount / 100
+			'amount' => $amount
 		));
 		$result = $this->socket->post(
 			$this->url . '/' . $this->settings['clientName'] . '/airtime/mtc/sale/v1',
