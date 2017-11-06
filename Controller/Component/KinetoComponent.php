@@ -68,6 +68,22 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		$this->log('Kineto API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+		return json_decode($result->body, true);
+	}
+
+	public function mtcAwehSale($transactionId, $mobileNumber, $amount) {
+		$payload = json_encode(array(
+			'transactionId' => $transactionId,
+			'mobileNumber' => $mobileNumber,
+			'amount' => $amount
+		));
+		$result = $this->socket->post(
+			$this->url . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
+			$payload,
+			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
+		);
+		$this->log('Kineto API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
