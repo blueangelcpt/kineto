@@ -3,9 +3,9 @@ App::uses('HttpSocket', 'Network/Http');
 class KinetoComponent extends Component {
 	public $settings = array(
 		'authToken' => '',
-		'clientName' => ''
+		'clientName' => '',
+		'url' => ''
 	);
-	private $url = 'https://vend.airtimecity.com/VendingRestfulAPI/api';
 	private $socket = '';
 	private $tag = 'kineto';
 
@@ -22,7 +22,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/airtimeCity/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/airtimeCity/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -36,7 +36,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/flexiCall/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/flexiCall/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -50,7 +50,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/hollard/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/hollard/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -64,7 +64,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/mtc/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtc/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -79,7 +79,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -94,7 +94,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/switch/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/switch/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -108,7 +108,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/tnMobile/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tnMobile/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -122,7 +122,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/tradespot/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tradespot/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -136,7 +136,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/airtime/vodacom/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/vodacom/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -145,20 +145,21 @@ class KinetoComponent extends Component {
 
 	public function netvendInfo() {
 		return $this->socket->get(
-			$this->url . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/info/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/info/v1',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
 	}
 
-	public function netvendSale($transactionId, $meterNumber, $municipalityCode, $amount) {
+	public function netvendSale($transactionId, $meterNumber, $municipalityCode, $amount, $mobile_number) {
 		$payload = json_encode(array(
 			'transactionId' => $transactionId,
 			'meterNumber' => $meterNumber,
 			'municipalityCode' => $municipalityCode,
-			'amount' => $amount
+			'amount' => $amount,
+			'mobileNumber' => $mobile_number
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -167,7 +168,7 @@ class KinetoComponent extends Component {
 
 	public function netvendWaterInfo() {
 		return $this->socket->get(
-			$this->url . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/info/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/info/v1',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
 	}
@@ -180,7 +181,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -189,14 +190,14 @@ class KinetoComponent extends Component {
 
 	public function termsAndConditions() {
 		return $this->socket->get(
-			$this->url . '/' . $this->settings['clientName'] . '/termsAndConditions',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/termsAndConditions',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
 	}
 
 	public function getProductList() {
 		return $this->socket->get(
-			$this->url . '/' . $this->settings['clientName'] . '/productList',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/productList',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
 	}
@@ -213,7 +214,7 @@ class KinetoComponent extends Component {
 			)
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/createAccount',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/createAccount',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -227,7 +228,7 @@ class KinetoComponent extends Component {
 			'reference' => $reference,
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/loadAccount/deviceReference',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/loadAccount/deviceReference',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -241,7 +242,7 @@ class KinetoComponent extends Component {
 			'reference' => $reference
 		));
 		$result = $this->socket->post(
-			$this->url . '/' . $this->settings['clientName'] . '/loadAccount/mobileNumber',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/loadAccount/mobileNumber',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
