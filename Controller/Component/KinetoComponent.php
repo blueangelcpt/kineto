@@ -143,11 +143,17 @@ class KinetoComponent extends Component {
 		return json_decode($result->body, true);
 	}
 
-	public function netvendInfo() {
-		return $this->socket->get(
+	public function netvendInfo($meter_number, $municipality_code) {
+		$payload = array(
+			'meterNumber' => $meter_number,
+			'municipalityCode' => $municipality_code,
+		);
+		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/info/v1',
+			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		return json_decode($result->body, true);
 	}
 
 	public function netvendSale($transactionId, $meterNumber, $municipalityCode, $amount, $mobile_number) {
@@ -167,10 +173,11 @@ class KinetoComponent extends Component {
 	}
 
 	public function netvendWaterInfo() {
-		return $this->socket->get(
+		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/info/v1',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		return json_decode($result->body, true);
 	}
 
 	public function netvendWaterSale($transactionId, $meterNumber, $municipalityCode, $amount) {
@@ -189,17 +196,19 @@ class KinetoComponent extends Component {
 	}
 
 	public function termsAndConditions() {
-		return $this->socket->get(
+		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/termsAndConditions',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		return json_decode($result->body, true);
 	}
 
 	public function getProductList() {
-		return $this->socket->get(
+		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/productList',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		return json_decode($result->body, true);
 	}
 
 	public function createAccount($firstName, $secondName, $lastName, $deviceId, $deviceType, $language) {
