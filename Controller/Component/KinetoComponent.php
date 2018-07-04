@@ -68,7 +68,7 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('Kineto API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+		$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
@@ -83,7 +83,7 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('Kineto API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+		$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
@@ -169,6 +169,7 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		$this->log('Prepaid electricity API result (N$' . $amount . ' for ' . $meterNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
