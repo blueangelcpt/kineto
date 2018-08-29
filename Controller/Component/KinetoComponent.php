@@ -108,10 +108,11 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$result = $this->socket->post(
-			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tnMobile/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tnmobile/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		$this->log('TN Mobile API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
@@ -253,6 +254,57 @@ class KinetoComponent extends Component {
 		));
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/loadAccount/mobileNumber',
+			$payload,
+			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
+		);
+		return json_decode($result->body, true);
+	}
+
+	public function dstvInfo($account_number) {
+		if (strlen($account_number) > 10) {
+			$payload = array(
+				'customerNumber' => $account_number
+			);
+		} else {
+			$payload = array(
+				'smartcardNumber' => $account_number
+			);
+		}
+		$result = $this->socket->get(
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/dstv/info/v1',
+			$payload,
+			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
+		);
+		return json_decode($result->body, true);
+	}
+
+	public function dstvSale($transactionId, $account_number, $amount, $type) {
+		switch ($type) {
+			case 'boxoffice':
+				$action = 'BOX_OFFICE_AMOUNT';
+				break;
+			case 'dstv':
+			default:
+				$action = 'OWN_AMOUNT';
+				break;
+		}
+		if (strlen($account_number) > 10) {
+			$payload = json_encode(array(
+				'transactionId' => $transactionId,
+				'customerNumber' => $account_number,
+				'action' => $action,
+				'amount' => $amount,
+			));
+		} else {
+			$payload = json_encode(array(
+				'transactionId' => $transactionId,
+				'smartcardNumber' => $account_number,
+				'action' => $action,
+				'amount' => $amount,
+			));
+		}
+		$result = $this->socket->post(
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/dstv/confirmPayment/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
