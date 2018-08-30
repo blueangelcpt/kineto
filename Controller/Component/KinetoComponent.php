@@ -263,11 +263,11 @@ class KinetoComponent extends Component {
 	public function dstvInfo($account_number) {
 		if (strlen($account_number) > 10) {
 			$payload = array(
-				'customerNumber' => $account_number
+				'smartcardNumber' => $account_number
 			);
 		} else {
 			$payload = array(
-				'smartcardNumber' => $account_number
+				'customerNumber' => $account_number
 			);
 		}
 		$result = $this->socket->get(
@@ -291,14 +291,14 @@ class KinetoComponent extends Component {
 		if (strlen($account_number) > 10) {
 			$payload = json_encode(array(
 				'transactionId' => $transactionId,
-				'customerNumber' => $account_number,
+				'smartcardNumber' => $account_number,
 				'action' => $action,
 				'amount' => $amount,
 			));
 		} else {
 			$payload = json_encode(array(
 				'transactionId' => $transactionId,
-				'smartcardNumber' => $account_number,
+				'customerNumber' => $account_number,
 				'action' => $action,
 				'amount' => $amount,
 			));
