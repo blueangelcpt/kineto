@@ -275,6 +275,7 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		$this->log('DSTv info API result (' . $account_number . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
