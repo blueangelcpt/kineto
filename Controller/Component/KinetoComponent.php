@@ -12,7 +12,12 @@ class KinetoComponent extends Component {
 	public function initialize(Controller $controller, $settings = array()) {
 		$this->controller = $controller;
 		$this->settings = array_merge($this->settings, $settings);
-		$this->socket = new HttpSocket();
+		$this->socket = new HttpSocket(array(
+			'ssl_verify_peer' => false,
+			'ssl_verify_host' => false,
+			'ssl_verify_peer' => false,
+			'timeout' => 60
+		));
 	}
 
 	public function airtimeCitySale($transactionId, $mobileNumber, $amount) {
