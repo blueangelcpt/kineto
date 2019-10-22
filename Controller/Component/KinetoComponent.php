@@ -157,11 +157,13 @@ class KinetoComponent extends Component {
 			'meterNumber' => $meter_number,
 			'municipalityCode' => $municipality_code,
 		);
+		$this->log('Prepaid electricity API request (' . $meter_number . '): ' . $payload, 'kineto');
 		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/info/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
+		$this->log('Prepaid electricity API result (' . $meter_number . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
