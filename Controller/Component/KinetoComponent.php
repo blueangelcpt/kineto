@@ -68,7 +68,7 @@ class KinetoComponent extends Component {
 			'mobileNumber' => $mobileNumber,
 			'amount' => $amount
 		));
-		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . $payload, 'kineto');
+		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtc/sale/v1',
 			$payload,
@@ -84,7 +84,7 @@ class KinetoComponent extends Component {
 			'mobileNumber' => $mobileNumber,
 			'amount' => $amount
 		));
-		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . $payload, 'kineto');
+		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
 			$payload,
@@ -114,7 +114,7 @@ class KinetoComponent extends Component {
 			'mobileNumber' => $mobileNumber,
 			'amount' => $amount
 		));
-		$this->log('TN Mobile API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . $payload, 'kineto');
+		$this->log('TN Mobile API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tnmobile/sale/v1',
 			$payload,
@@ -157,7 +157,7 @@ class KinetoComponent extends Component {
 			'meterNumber' => $meter_number,
 			'municipalityCode' => $municipality_code,
 		);
-		$this->log('Prepaid electricity API request (' . $meter_number . '): ' . $payload, 'kineto');
+		$this->log('Prepaid electricity API request (' . $meter_number . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/info/v1',
 			$payload,
@@ -175,7 +175,7 @@ class KinetoComponent extends Component {
 			'amount' => $amount,
 			'mobileNumber' => $mobile_number
 		));
-		$this->log('Prepaid electricity API request (N$' . $amount . ' for ' . $meterNumber . '): ' . $payload, 'kineto');
+		$this->log('Prepaid electricity API request (N$' . $amount . ' for ' . $meterNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/electricity/sale/v1',
 			$payload,
@@ -281,7 +281,7 @@ class KinetoComponent extends Component {
 				'customerNumber' => $account_number
 			);
 		}
-		$this->log('DSTv info API request (' . $account_number . '): ' . $payload, 'kineto');
+		$this->log('DSTv info API request (' . $account_number . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->get(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/dstv/info/v1',
 			$payload,
@@ -316,7 +316,7 @@ class KinetoComponent extends Component {
 				'amount' => $amount,
 			));
 		}
-		$this->log('DSTv API request (N$' . $amount . ' for ' . $account_number . '): ' . $payload, 'kineto');
+		$this->log('DSTv API request (N$' . $amount . ' for ' . $account_number . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/dstv/confirmPayment/v1',
 			$payload,
