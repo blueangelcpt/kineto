@@ -93,6 +93,21 @@ class KinetoComponent extends Component {
 		$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
+	public function mtcDirectSale($transactionId, $mobileNumber, $amount) {
+		$payload = json_encode(array(
+			'transactionId' => $transactionId,
+			'mobileNumber' => $mobileNumber,
+			'amount' => $amount
+		));
+		$this->log('MTC Topup API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
+		$result = $this->socket->post(
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcdirect/sale/v1',
+			$payload,
+			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
+		);
+		$this->log('MTC Topup API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+		return json_decode($result->body, true);
+	}
 
 	public function switchSale($transactionId, $mobileNumber, $amount) {
 		$payload = json_encode(array(
