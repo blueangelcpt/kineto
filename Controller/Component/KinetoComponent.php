@@ -86,7 +86,7 @@ class KinetoComponent extends Component {
 		));
 		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
-			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcaweh/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
