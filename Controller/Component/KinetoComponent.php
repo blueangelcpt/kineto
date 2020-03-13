@@ -86,7 +86,7 @@ class KinetoComponent extends Component {
 		));
 		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
-			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcaweh/sale/v1',
+			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
@@ -97,15 +97,15 @@ class KinetoComponent extends Component {
 		$payload = json_encode(array(
 			'transactionId' => $transactionId,
 			'mobileNumber' => $mobileNumber,
-			'amount' => $amount
+			'amount' => number_format($amount / 100, 2)
 		));
-		$this->log('MTC Topup API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
+		$this->log('MTC Topup API request (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcdirect/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('MTC Topup API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+		$this->log('MTC Topup API result (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
 		return json_decode($result->body, true);
 	}
 
