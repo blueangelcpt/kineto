@@ -31,7 +31,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function flexiCallSale($transactionId, $mobileNumber, $amount) {
@@ -45,7 +49,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function hollardSale($transactionId, $mobileNumber, $amount) {
@@ -59,7 +67,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function mtcSale($transactionId, $mobileNumber, $amount) {
@@ -74,8 +86,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function mtcAwehSale($transactionId, $mobileNumber, $amount) {
@@ -90,9 +106,14 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
+
 	public function mtcDirectSale($transactionId, $mobileNumber, $amount) {
 		$payload = json_encode(array(
 			'transactionId' => $transactionId,
@@ -105,8 +126,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('MTC Topup API result (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('MTC Topup API result (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function switchSale($transactionId, $mobileNumber, $amount) {
@@ -120,7 +145,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function tnMobileSale($transactionId, $mobileNumber, $amount) {
@@ -135,8 +164,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('TN Mobile API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('TN Mobile API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function tradespotSale($transactionId, $mobileNumber, $amount) {
@@ -150,7 +183,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function vodacomSale($transactionId, $mobileNumber, $amount) {
@@ -164,7 +201,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function netvendInfo($meter_number, $municipality_code) {
@@ -178,8 +219,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('Prepaid electricity API result (' . $meter_number . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('Prepaid electricity API result (' . $meter_number . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function netvendSale($transactionId, $meterNumber, $municipalityCode, $amount, $mobile_number) {
@@ -196,8 +241,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('Prepaid electricity API result (N$' . $amount . ' for ' . $meterNumber . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('Prepaid electricity API result (N$' . $amount . ' for ' . $meterNumber . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function netvendWaterInfo() {
@@ -205,7 +254,11 @@ class KinetoComponent extends Component {
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/billpayment/netvend/water/info/v1',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function netvendWaterSale($transactionId, $meterNumber, $municipalityCode, $amount) {
@@ -220,7 +273,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function termsAndConditions() {
@@ -228,7 +285,11 @@ class KinetoComponent extends Component {
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/termsAndConditions',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function getProductList() {
@@ -236,7 +297,11 @@ class KinetoComponent extends Component {
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/productList',
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function createAccount($firstName, $secondName, $lastName, $deviceId, $deviceType, $language) {
@@ -255,7 +320,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function loadAccountByDeviceReference($deviceReference, $amount, $reference) {
@@ -269,7 +338,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function loadAccountByMobileNumber($mobile_number, $amount, $reference) {
@@ -283,7 +356,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function dstvInfo($account_number) {
@@ -302,8 +379,12 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('DSTv info API result (' . $account_number . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('DSTv info API result (' . $account_number . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 
 	public function dstvSale($transactionId, $account_number, $amount, $type) {
@@ -337,7 +418,11 @@ class KinetoComponent extends Component {
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
-		$this->log('DSTv API result (N$' . $amount . ' for ' . $account_number . '): ' . $result, 'kineto');
-		return json_decode($result->body, true);
+		if ($result->isOk()) {
+			$this->log('DSTv API result (N$' . $amount . ' for ' . $account_number . '): ' . $result, 'kineto');
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
 	}
 }
