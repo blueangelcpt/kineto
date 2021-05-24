@@ -8,6 +8,12 @@ class KinetoComponent extends Component {
 	);
 	private $socket = '';
 	private $tag = 'kineto';
+	public $atcSettings = array(
+		'Url'=>'https://clientserv.net/ATCMerchants/api/Elec',
+		'TradeCode'=>'2532',
+		'TradePass'=>'27fd8249-c1da-4a7b-ac9e-1070408623c8',
+		'TerminalId'=>'Pay Today',
+	);
 
 	public function initialize(Controller $controller, $settings = array()) {
 		$this->controller = $controller;
@@ -32,6 +38,25 @@ class KinetoComponent extends Component {
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
 		);
 		if ($result->isOk()) {
+			return json_decode($result->body, true);
+		} else {
+			return NULL;
+		}
+	}
+	public function airtimeCityElectricity($meterNumber,$amount, $mobileNumber) {
+		$authPayload = array(
+			'TradeCode' => $this->atcSettings['TradeCode'],
+			'TradePass' => $this->atcSettings['TradePass'],
+			'TerminalId' => $this->atcSettings['TerminalId'],
+			'content-length' => '0'
+		);
+		$this->log('ATC Electricity request (N$' . number_format($amount, 2) . ' for ' . $mobileNumber . '): ' . json_encode($meterNumber, true), 'ATC');
+		$result = $this->socket->post($this->atcSettings['Url']."?MeterNumber=".$meterNumber."&Amount=".$amount,
+			$authPayload,
+			array('header' => $authPayload)
+		);
+		if ($result->isOk()) {
+			$this->log('ATC Electricity request result ' . json_encode($result->body, true), 'ATC');
 			return json_decode($result->body, true);
 		} else {
 			return NULL;
