@@ -184,17 +184,22 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$this->log('TN Mobile API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
-		$result = $this->socket->post(
+
+		if($result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/tnmobile/sale/v1',
 			$payload,
-			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
-		);
-		if ($result->isOk()) {
-			$this->log('TN Mobile API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-			return json_decode($result->body, true);
-		} else {
+			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json')))){
+				if ($result->isOk()) {
+					$this->log('TN Mobile API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+					return json_decode($result->body, true);
+				} else {
+					$this->log('TN Mobile API failed response (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+					return NULL;
+				}
+		}else{
+			$this->log('TN Mobile API TIMEOUT (N$' . $amount . ' for ' . $mobileNumber . '): kineto');
 			return NULL;
-		}
+		}	
 	}
 
 	public function tradespotSale($transactionId, $mobileNumber, $amount) {
