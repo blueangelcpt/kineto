@@ -106,17 +106,23 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
-		$result = $this->socket->post(
+		
+		if($result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtc/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
-		);
-		if ($result->isOk()) {
-			$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-			return json_decode($result->body, true);
-		} else {
+		)){
+			if ($result->isOk()) {
+				$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return json_decode($result->body, true);
+			} else {
+				$this->log('MTC API failure (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return NULL;
+			}
+		}else{
+			$this->log('MTC Mobile API TIMEOUT (N$' . $amount . ' for ' . $mobileNumber . '): kineto');
 			return NULL;
-		}
+		}	
 	}
 
 	public function mtcAwehSale($transactionId, $mobileNumber, $amount) {
@@ -126,17 +132,24 @@ class KinetoComponent extends Component {
 			'amount' => $amount
 		));
 		$this->log('MTC API request (N$' . $amount . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
-		$result = $this->socket->post(
+		if($result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcAweh/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
-		);
-		if ($result->isOk()) {
-			$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-			return json_decode($result->body, true);
-		} else {
+		)){
+			if ($result->isOk()) {
+				$this->log('MTC API result (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return json_decode($result->body, true);
+			} else {
+				$this->log('MTC API failure (N$' . $amount . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return NULL;
+			}
+		}else{
+			$this->log('MTC Mobile API TIMEOUT (N$' . $amount . ' for ' . $mobileNumber . '): kineto');
 			return NULL;
-		}
+		}	
+		
+		
 	}
 
 	public function mtcDirectSale($transactionId, $mobileNumber, $amount) {
@@ -146,17 +159,24 @@ class KinetoComponent extends Component {
 			'amount' => number_format($amount / 100, 2)
 		));
 		$this->log('MTC Topup API request (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . json_encode($payload, true), 'kineto');
-		$result = $this->socket->post(
+		if($result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/mtcdirect/sale/v1',
 			$payload,
 			array('header' => array('authenticationToken' => $this->settings['authToken'], 'Content-Type' => 'application/json'))
-		);
-		if ($result->isOk()) {
-			$this->log('MTC Topup API result (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
-			return json_decode($result->body, true);
-		} else {
+		)){
+			if ($result->isOk()) {
+				$this->log('MTC Topup API result (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return json_decode($result->body, true);
+			} else {
+				$this->log('MTC Topup API failure (N$' . number_format($amount / 100, 2) . ' for ' . $mobileNumber . '): ' . $result, 'kineto');
+				return NULL;
+			}
+		}else{
+			$this->log('MTC Mobile API TIMEOUT (N$' . $amount . ' for ' . $mobileNumber . '): kineto');
 			return NULL;
-		}
+		}	
+		
+		
 	}
 
 	public function switchSale($transactionId, $mobileNumber, $amount) {
@@ -165,6 +185,7 @@ class KinetoComponent extends Component {
 			'mobileNumber' => $mobileNumber,
 			'amount' => $amount
 		));
+		
 		$result = $this->socket->post(
 			$this->settings['url'] . '/' . $this->settings['clientName'] . '/airtime/switch/sale/v1',
 			$payload,
